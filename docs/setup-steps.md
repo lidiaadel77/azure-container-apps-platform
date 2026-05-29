@@ -86,3 +86,37 @@ Next phase:
 - Build the Flask Docker image
 - Push the image to Azure Container Registry
 - Update Azure Container Apps to run the Flask image
+
+## 7. Deploy Flask Image to Azure Container Apps
+
+The Flask Docker image was built locally and pushed to Azure Container Registry.
+
+Image name:
+
+`acrcontainer7oxdr.azurecr.io/flask-api:1.0.0`
+
+The Azure Container App was updated from the Microsoft sample image to the custom Flask image.
+
+Container App URL:
+
+`https://ca-container-platform-7oxdr.yellowocean-0ed0230d.francecentral.azurecontainerapps.io`
+
+Tested endpoints:
+
+- `/`
+- `/health`
+- `/version`
+
+The `/health` endpoint confirmed the Flask API was running successfully on Azure Container Apps.
+
+The `/version` endpoint confirmed the deployed environment and version.
+
+Screenshots captured:
+
+- `container-app-flask-home.png`
+- `container-app-health.png`
+- `container-app-version.png`
+
+Current status:
+
+The custom Flask container image is running successfully on Azure Container Apps.

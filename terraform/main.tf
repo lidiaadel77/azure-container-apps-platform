@@ -76,12 +76,27 @@ resource "azurerm_container_app" "main" {
     identity_ids = [azurerm_user_assigned_identity.container_app.id]
   }
 
+  registry {
+    server   = azurerm_container_registry.main.login_server
+    identity = azurerm_user_assigned_identity.container_app.id
+  }
+
   template {
     container {
       name   = "web"
-      image  = "mcr.microsoft.com/azuredocs/containerapps-helloworld:latest"
+      image  = "${azurerm_container_registry.main.login_server}/flask-api:1.0.0"
       cpu    = 0.25
       memory = "0.5Gi"
+
+      env {
+        name  = "APP_VERSION"
+        value = "1.0.0"
+      }
+
+      env {
+        name  = "APP_ENV"
+        value = "azure-container-apps"
+      }
     }
 
     min_replicas = 0
@@ -90,7 +105,7 @@ resource "azurerm_container_app" "main" {
 
   ingress {
     external_enabled = true
-    target_port      = 80
+    target_port      = 5000
 
     traffic_weight {
       percentage      = 100
@@ -102,3 +117,5 @@ resource "azurerm_container_app" "main" {
     azurerm_role_assignment.acr_pull
   ]
 }
+
+

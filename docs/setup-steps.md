@@ -120,3 +120,41 @@ Screenshots captured:
 Current status:
 
 The custom Flask container image is running successfully on Azure Container Apps.
+
+## 8. GitHub Actions CI/CD Deployment
+
+GitHub Actions was configured to automatically build and deploy the Dockerized Flask application.
+
+Workflow file:
+
+`.github/workflows/test-build.yml`
+
+The workflow performs the following steps:
+
+- Checks out the repository
+- Sets up Python
+- Installs dependencies
+- Runs Pytest tests
+- Logs into Azure using OpenID Connect
+- Logs into Azure Container Registry
+- Builds the Docker image
+- Pushes the Docker image to ACR
+- Updates Azure Container Apps with the new image
+
+Azure Container Registry:
+
+`acrcontainer7oxdr`
+
+Container App:
+
+`ca-container-platform-7oxdr`
+
+The deployed image tag uses the GitHub commit SHA.
+
+The `/version` endpoint confirms the app was deployed by GitHub Actions.
+
+Expected environment value:
+
+`github-actions`
+
+This completes the automated container CI/CD pipeline.
